@@ -10,6 +10,7 @@ Berikut setting microsd yang saya gunakan :
 - Nama Folder : MP3
 - Nama file terdiri dari 4 digit diawali dengan 0. Contoh : 0001.mp3
 
+```
 void play(){
   if ((millis()-previousMillis_1) > interval_1) {
   previousMillis_1 = millis();
@@ -17,3 +18,4 @@ void play(){
   mp3.playMP3Folder(3); // memainkan file mp3 di folder MP3 track 3 
   }
 }
+```
