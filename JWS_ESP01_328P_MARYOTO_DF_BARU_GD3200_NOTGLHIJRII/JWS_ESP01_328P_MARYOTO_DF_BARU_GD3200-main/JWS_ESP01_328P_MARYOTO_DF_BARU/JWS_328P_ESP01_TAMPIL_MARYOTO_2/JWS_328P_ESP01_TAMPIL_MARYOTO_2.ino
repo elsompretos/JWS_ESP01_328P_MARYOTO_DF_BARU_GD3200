@@ -500,7 +500,8 @@ if ( !evt_1 && (millis()-p_e_1_jam) > 50) {
         if(mode == 1)
           { mode = 0;} // NAMA MASJID
         else if(mode == 3) 
-          { mode = 2; } // TANGGAL HIJRIYAH
+          //{ mode = 2; } // TANGGAL HIJRIYAH
+          { mode = 9; } // TANGGAL MASEHI
         else if(mode == 8) 
           { mode = 4; } // WAKTU SHOLAT
        ash=0;
