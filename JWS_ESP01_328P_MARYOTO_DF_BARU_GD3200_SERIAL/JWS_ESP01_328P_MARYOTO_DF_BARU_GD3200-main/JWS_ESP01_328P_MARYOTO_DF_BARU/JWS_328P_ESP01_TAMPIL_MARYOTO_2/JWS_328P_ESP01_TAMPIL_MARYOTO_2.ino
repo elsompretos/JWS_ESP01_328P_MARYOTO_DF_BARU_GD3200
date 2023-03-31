@@ -44,6 +44,8 @@
 
   (30-03-2023)     Global variables use 860 bytes (41%) of dynamic memory, leaving 1188 bytes for local variables. Maximum is 2048 bytes. (serial Nyala)
                    Global variables use 852 bytes (41%) of dynamic memory, leaving 1196 bytes for local variables. Maximum is 2048 bytes. (tanpa serial)
+                   Global variables use 844 bytes (41%) of dynamic memory, leaving 1204 bytes for local variables. Maximum is 2048 bytes.
+
 
 
 
@@ -412,8 +414,23 @@ void loop() {
 
       BUZZ();
     }
+    
     // Ambil kalender hijriyah dari ESP-01
     else if (tx_ser.substring(0, 2) == "HR") {
+      //Serial.println(tx_ser);
+      isi_tgl_hijrii = tx_ser.substring(3, tx_ser.length());
+      Serial.println(isi_tgl_hijrii);
+    }
+    
+    // Ambil jadwal dari ESP-01
+    else if (tx_ser.substring(0, 2) == "JR") {
+      //Serial.println(tx_ser);
+      isi_tgl_hijrii = tx_ser.substring(3, tx_ser.length());
+      Serial.println(isi_tgl_hijrii);
+    }
+    
+    // Ambil Tanggal dari ESP-01
+    else if (tx_ser.substring(0, 2) == "TR") {
       //Serial.println(tx_ser);
       isi_tgl_hijrii = tx_ser.substring(3, tx_ser.length());
       Serial.println(isi_tgl_hijrii);
@@ -474,6 +491,7 @@ void TPL_HH () {                      // MENAMPILKAN JAM BESAR
   int b_ses_hijriyah;
   EEPROM.get(63, b_ses_hijriyah);
   String txt_kirim = "RH=" + String(Konversi(Tanggal)) + "-" + String(Konversi(Bulan)) + "-" + String(Konversi(Tahun)) + "-" + String(hariIni) + "-" + String(b_ses_hijriyah) ;
+  
   if (flag_hijriyah == 0) {
     Serial.println(txt_kirim);
     flag_hijriyah = 1;
@@ -541,6 +559,9 @@ void TPL_HH () {                      // MENAMPILKAN JAM BESAR
       }
       else if (mode == 8)
       {
+        // Ambil jadwal dari ESP
+        String txt_kirim_jadwal = "RJ=" + String(Konversi(Tanggal)) + "-" + String(Konversi(Bulan)) + "-" + String(Konversi(Tahun));
+        Serial.println(txt_kirim_jadwal);
         mode = 4;  // WAKTU SHOLAT
       }
       ash = 0;
@@ -558,10 +579,6 @@ void TPL_HH_TGL(int pilih) {          // MENAMPILKAN TANGGAL HIJRIYAH
 
 
   if (pilih == 1) { // ============= TANGGAL HIJRIYAH
-    //    int b_ses_hijriyah, kode_hari_raya;
-    //
-    //    EEPROM.get(63, b_ses_hijriyah);
-    //    str_tanggal_hijriyah = Kuwaiti_algorithm(Tanggal, Bulan, Tahun, hariIni, b_ses_hijriyah);
     str_tanggal_hijriyah = isi_tgl_hijrii;
 
 
@@ -641,6 +658,8 @@ void TPL_HH_TGL(int pilih) {          // MENAMPILKAN TANGGAL HIJRIYAH
 
   }
   else if (pilih == 2) { // ============= TANGGAL MASEHI
+    str_tanggal_hijriyah = isi_tgl_hijrii;
+    /*
     // Hari Masehi
     char DayName[7];
     memset(DayName, 0, 7);
@@ -652,21 +671,18 @@ void TPL_HH_TGL(int pilih) {          // MENAMPILKAN TANGGAL HIJRIYAH
     strcpy_P(BulanName, namaBulanMasehi[Bulan - 1]);
 
     str_tanggal_hijriyah =  String(DayName) + ", " + String(Tanggal) + " " + String(BulanName) + " " + String(Tahun);
+    */
   }
   else if (pilih == 3) { // ============= NAMA MASJID
     str_tanggal_hijriyah = readString(71);
   }
   else if (pilih == 4) { // ============= LURUSKAN
-
-    /*    char isiPesan[60];
-          memset(isiPesan, 0, 60);
-          strcpy_P(isiPesan, pesan[0]);
-
-          str_tanggal_hijriyah = isiPesan;
-    */
     str_tanggal_hijriyah = readString(221);
   }
   else if (pilih == 5) { // ============= JWS
+    str_tanggal_hijriyah = isi_tgl_hijrii;
+    
+    /*
 
     // Imsak 04:32 Subuh 04:42 Terbit 06:05 Dhuha 06:27 Dzuhur 11:58 Ashar 15:20 Maghrib 17:51 Isya 19:06
     // Imsak 04:32 Terbit 06:03 Dhuha 06:25 Dzuhur 11:58 Ashar 15:20 Maghrib 17:51 Isya 19:06
@@ -770,7 +786,7 @@ void TPL_HH_TGL(int pilih) {          // MENAMPILKAN TANGGAL HIJRIYAH
       str_tanggal_hijriyah = str_tanggal_hijriyah + nama_waktu + waktu_isy;
     } else {
       str_tanggal_hijriyah = str_tanggal_hijriyah;
-    }
+    }*/
   }
   else if (pilih == 6) { // ============= INFO 1
     str_tanggal_hijriyah = readString(371);
@@ -814,6 +830,8 @@ void TPL_HH_TGL(int pilih) {          // MENAMPILKAN TANGGAL HIJRIYAH
     else
     {
       if (pilih == 1) {
+        String txt_kirim_tanggal = "RT=" + String(Konversi(Tanggal)) + "-" + String(Konversi(Bulan)) + "-" + String(Konversi(Tahun)) + "-" + String(hariIni);
+        Serial.println(txt_kirim_tanggal);
         mode = 9; // TANGGAL HIJRIYAH >> TANGGAL MASEHI
       }
       else if (pilih == 2) {
@@ -898,6 +916,7 @@ void TPL_HH_WKT_MSK() {               // MENAMPILKAN WAKTU MASUK ADZAN
       }
       else if (dur_tpl_tx_sol == 11) {
         if (wkt_msk_skrg == 2) {
+          EEPROM.get(69, b_volume_adzan);
           mp3.setVolume(b_volume_adzan);
           mp3.wakeup(2);
           mp3.playMP3Folder(2);
@@ -961,7 +980,6 @@ void TPL_HH_WKT_MSK() {               // MENAMPILKAN WAKTU MASUK ADZAN
         wkt_msk_skrg = 0;
         mode = 6; //  memanggil IQOMAH
       }
-
     }
   }
 }
@@ -1206,6 +1224,7 @@ void AMBIL_WAKTU_SHOLAT() {           // AMBIL WAKTU SHOLAT
 
   if (Menit == 0 && Detik == 0 && wkt_msk_skrg == 0) {
     if (flag_mp3 == 0) {
+      EEPROM.get(67, b_volume);
       mp3.setVolume(b_volume);
       mp3.wakeup(2);
       if (Jam == 1 || Jam == 13)      {
