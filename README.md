@@ -1,4 +1,7 @@
 # JWS_ESP01_328P_MARYOTO_DF_BARU
+
+Terbaru : JWS_ESP01_328P_MARYOTO_DF_BARU_GD3200_SERIAL
+
 Ganti Library https://github.com/enjoyneering/DFPlayer
 
 Sudah ditest pada DFPlayer Mini dengan IC GD3200
