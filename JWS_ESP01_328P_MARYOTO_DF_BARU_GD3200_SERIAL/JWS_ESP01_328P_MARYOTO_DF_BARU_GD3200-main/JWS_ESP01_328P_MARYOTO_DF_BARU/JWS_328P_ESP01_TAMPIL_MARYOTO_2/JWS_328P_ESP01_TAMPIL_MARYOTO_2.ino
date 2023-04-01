@@ -86,9 +86,9 @@ int mode = 1;
 int ash, bsh;
 
 //String txhh, txmm, txss, tx_hh_mm, tx_hh_mm_ss, namaHarimasehi ;
-String tx_hh_mm, tx_hh_mm_ss; //, namaHarimasehi ;
+String tx_hh_mm; //, tx_hh_mm_ss; //, namaHarimasehi ;
 String waktu_tbt, waktu_dhu, waktu_sbh, waktu_dzr, waktu_ims, waktu_asr, waktu_mgr, waktu_isy; //, jss;
-String wkt_iqomah, tpl_iqo_ss, namaMasukWkt, textIqohitmun, wkt_ims_sat;
+String wkt_iqomah, tpl_iqo_ss, namaMasukWkt, textIqohitmun;//, wkt_ims_sat;
 
 int b_bright, b_volume, b_volume_adzan;
 byte b_beep, b_tpl_nama, b_tpl_info1, b_tpl_info2, b_tpl_stlh_iqomah;
